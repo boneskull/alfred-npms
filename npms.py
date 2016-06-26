@@ -18,7 +18,6 @@ from urllib import quote_plus
 from persistent_dict import PersistentDict
 
 cache_filename = 'npms.cache'
-search_score_threshold = float(getenv('NPMS_SEARCH_SCORE_THRESHOLD', 0))
 cache_expiry = int(getenv('NPMS_CACHE_EXPIRATION', 86400))
 url = 'https://api.npms.io/search?term=%s'
 
@@ -57,34 +56,22 @@ def npms():
         return dict(items=[dict(title='Error: %s' % result['error'], subtitle=result['reason'], valid=False)])
 
       if 'results' in data and data['results']:
-        good_results = [result for result in data['results']
-                        if result['searchScore'] >= search_score_threshold]
-
-        for result in good_results:
+        for result in data['results']:
           items.append(dict(
               title='%s @ %s' % (result['name'], result['version']),
               subtitle=result['description'],
               arg=result['links']['npm'],
               mods=dict(
                   alt=dict(
-                    arg=result['links']['homepage'],
+                    arg=result['links'].get('homepage', 'repository'),
                     subtitle='Open project homepage'),
                   cmd=dict(
-                      arg=result['links']['repository'],
+                      arg=result['links'].get('repository', 'npm'),
                       subtitle='Open project repository')),
               text=dict(
                   copy=result['links']['npm'],
                   largetype=result['name'])))
-
-        if good_results:
-          cache[term] = dict(items=items, timestamp=int(time()))
-        else:
-          items.append(dict(
-              title='No decent matches (%d packages ignored)!' % len(data[
-                  'results']),
-              subtitle='(Repeat search on site)',
-              arg='https://npms.io/search?term=%s' % term
-          ))
+        cache[term] = dict(items=items, timestamp=int(time()))
       else:
         items.append(dict(
             title='No matches!',

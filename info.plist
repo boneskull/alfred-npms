@@ -209,7 +209,6 @@
 These are set within the workflow configuration and can be altered to better suit your usage.
 
 - `NPMS_CACHE_EXPIRATION`: Number of seconds to keep search results.  Defaults to `86400` (one day).
-- `NPMS_SEARCH_SCORE_THRESHOLD`: Packages having a "search score" lower than this number will be ignored.  Defaults to `0.01`.
 
 ## License
 
@@ -256,11 +255,9 @@ Copyright 2016 [Christopher Hiller](https://boneskull.com).  Licensed MIT.</stri
 	<dict>
 		<key>NPMS_CACHE_EXPIRATION</key>
 		<string>86400</string>
-		<key>NPMS_SEARCH_SCORE_THRESHOLD</key>
-		<string>0.01</string>
 	</dict>
 	<key>version</key>
-	<string>0.1.0</string>
+	<string>0.2.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/boneskull/alfred-npms</string>
 </dict>

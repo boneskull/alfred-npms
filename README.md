@@ -22,7 +22,6 @@
 These are set within the workflow configuration and can be altered to better suit your usage.
 
 - `NPMS_CACHE_EXPIRATION`: Number of seconds to keep search results.  Defaults to `86400` (one day).
-- `NPMS_SEARCH_SCORE_THRESHOLD`: Packages having a "search score" lower than this number will be ignored.  Defaults to `0.01`.
 
 ## License
 

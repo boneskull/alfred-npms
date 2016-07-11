@@ -60,7 +60,7 @@ def npms():
           module = result['module']
           items.append(dict(
               title='%s @ %s' % (module['name'], module['version']),
-              subtitle=module.get('description', '(no description)')
+              subtitle=module.get('description', '(no description)'),
               arg=module['links']['npm'],
               mods=dict(
                   alt=dict(

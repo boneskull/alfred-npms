@@ -57,20 +57,21 @@ def npms():
 
       if 'results' in data and data['results']:
         for result in data['results']:
+          module = result['module']
           items.append(dict(
-              title='%s @ %s' % (result['name'], result['version']),
-              subtitle=result['description'],
-              arg=result['links']['npm'],
+              title='%s @ %s' % (module['name'], module['version']),
+              subtitle=module['description'],
+              arg=module['links']['npm'],
               mods=dict(
                   alt=dict(
-                    arg=result['links'].get('homepage', 'repository'),
+                    arg=module['links'].get('homepage', 'repository'),
                     subtitle='Open project homepage'),
                   cmd=dict(
-                      arg=result['links'].get('repository', 'npm'),
+                      arg=module['links'].get('repository', 'npm'),
                       subtitle='Open project repository')),
               text=dict(
-                  copy=result['links']['npm'],
-                  largetype=result['name'])))
+                  copy=module['links']['npm'],
+                  largetype=module['name'])))
         cache[term] = dict(items=items, timestamp=int(time()))
       else:
         items.append(dict(

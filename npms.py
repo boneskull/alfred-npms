@@ -19,7 +19,7 @@ from persistent_dict import PersistentDict
 
 cache_filename = 'npms.cache'
 cache_expiry = int(getenv('NPMS_CACHE_EXPIRATION', 86400))
-url = 'https://api.npms.io/search?term=%s'
+url = 'https://api.npms.io/v2/search?q=%s'
 
 
 def search(term):
@@ -58,7 +58,7 @@ def npms():
 
       if 'results' in data and data['results']:
         for result in data['results']:
-          module = result['module']
+          module = result['package']
           items.append(dict(
               title='%s @ %s' % (module['name'], module['version']),
               subtitle=module.get('description', '(no description)'),

@@ -30,7 +30,7 @@ def search(term):
   """
 
   try:
-    response = check_output(['/usr/bin/curl', url % quote_plus(term)])
+    response = check_output(['/usr/bin/curl', '-L', url % quote_plus(term)])
   except CalledProcessError, e:
     return dict(error='cURL failure', reason=str(e))
   else:
@@ -50,10 +50,11 @@ def npms():
     with PersistentDict(cache_filename) as cache:
       if term in cache and time() - cache[term]['timestamp'] < cache_expiry:
         return dict(items=cache[term]['items'])
+
       data = search(term)
 
       if 'error' in data:
-        return dict(items=[dict(title='Error: %s' % result['error'], subtitle=result['reason'], valid=False)])
+        return dict(items=[dict(title='Error: %s' % data['error'], subtitle=data['reason'], valid=False)])
 
       if 'results' in data and data['results']:
         for result in data['results']:

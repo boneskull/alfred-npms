@@ -31,10 +31,12 @@ def search(term):
   """
 
   try:
+    # print >> sys.stderr, ''.join(['/usr/bin/curl', '-L', url % quote_plus(term)])
     response = check_output(['/usr/bin/curl', '-L', url % quote_plus(term)])
   except CalledProcessError, e:
     return dict(error='cURL failure', reason=str(e))
   else:
+    # print >> sys.stderr, response
     try:
       return json.loads(response)
     except ValueError, e:
@@ -122,13 +124,13 @@ def npms():
         items.append(dict(
           title='No matches!  Try search on npms.io?',
           subtitle='(Repeat search for "%s" on npms.io)' % term,
-          arg='https://npms.io/search?term=%s' % term
+          arg='https://npms.io/search?q=%s' % term
         ))
         return dict(items=items)
 
     items.append(dict(title='Show more results on npms.io...',
                       subtitle='(Repeat search for "%s" on npms.io)' % term,
-                      arg='https://npms.io/search?term=%s' % term))
+                      arg='https://npms.io/search?q=%s' % term))
     return dict(items=items)
 
 
